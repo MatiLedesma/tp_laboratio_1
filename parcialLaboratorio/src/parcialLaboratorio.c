@@ -1,47 +1,48 @@
 /*
  ============================================================================
  Name        : parcialLaboratorio.c
- Author      : Ledesma Matias 1°c
+ Author      : Ledesma Matias 1ï¿½c
  Version     :
  Description :
  ENTIDADES:
 	Servicio:
-		• id (comienza en 20000)
-		• descripción (máximo 25 caracteres)
-		• precio
+		ï¿½ id (comienza en 20000)
+		ï¿½ descripciï¿½n (mï¿½ximo 25 caracteres)
+		ï¿½ precio
 		Trabajo:
-		• id (autoincremental)
-		• nombreMascota (cadena)
-		• idServicio (debe existir) Validar
-		• fecha (Validar día, mes y año)
+		ï¿½ id (autoincremental)
+		ï¿½ nombreMascota (cadena)
+		ï¿½ idServicio (debe existir) Validar
+		ï¿½ fecha (Validar dï¿½a, mes y aï¿½o)
 		DATOS PREVIOS:
-		El array de servicios será hardcodeado.
+		El array de servicios serï¿½ hardcodeado.
 		Servicios (Corte: $250, Desparasitado: $300, Castrado: $400)
 		MENU DE OPCIONES:
 		A. ALTA TRABAJO
-		B. MODIFICAR TRABAJO: Se ingresará el id, permitiendo en un submenú modificar:
-		• El nombre de la mascota
-		• El servicio
-		C. BAJA TRABAJO: Se ingresará el id del trabajo y se realizará una baja lógica.
-		D. LISTAR TRABAJOS: Hacer un único listado de todos los trabajos ordenados por año y ante igualdad
-		de año por nombre de mascota.
+		B. MODIFICAR TRABAJO: Se ingresarï¿½ el id, permitiendo en un submenï¿½ modificar:
+		ï¿½ El nombre de la mascota
+		ï¿½ El servicio
+		C. BAJA TRABAJO: Se ingresarï¿½ el id del trabajo y se realizarï¿½ una baja lï¿½gica.
+		D. LISTAR TRABAJOS: Hacer un ï¿½nico listado de todos los trabajos ordenados por aï¿½o y ante igualdad
+		de aï¿½o por nombre de mascota.
 		E. LISTAR SERVICIOS
 		F. TOTAL en pesos por los servicios prestados.
 
 		NOTAS:
-		I. Se deberá desarrollar bibliotecas por cada entidad, las cuales contendrán las
+		I. Se deberï¿½ desarrollar bibliotecas por cada entidad, las cuales contendrï¿½n las
 		funciones Alta, Baja, Modificar y Listar.
-		II. Las validaciones (input), deberán estar en una biblioteca aparte.
-		III. Tener en cuenta que no se podrá ingresar a los casos Modificar, Baja, y
+		II. Las validaciones (input), deberï¿½n estar en una biblioteca aparte.
+		III. Tener en cuenta que no se podrï¿½ ingresar a los casos Modificar, Baja, y
 		listados sin antes haber realizado al menos un Alta (utilizar banderas y/o
 		contadores).
-		IV. El código deberá tener comentarios con la documentación de cada una de
-		las funciones y respetar las reglas de estilo de la cátedra.
+		IV. El cï¿½digo deberï¿½ tener comentarios con la documentaciï¿½n de cada una de
+		las funciones y respetar las reglas de estilo de la cï¿½tedra.
 ============================================================================
  */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 #include "Servicios.h"
 #include "Trabajo.h"
@@ -49,14 +50,14 @@
 
 #define S 3
 #define X 10
-#define FECHA 3
+
 int main(void)
 {
 	sServicios serviciosArray[S];
 	sTrabajo trabajosArray[12];
 
-	HarcodearServicios(serviciosArray, S);
-	InicializarProducto(trabajosArray, X);
+	HardcodearServicios(serviciosArray, S);
+	InicializarTrabajo(trabajosArray, X);
 	char opc;
 	do
 	{
@@ -68,20 +69,20 @@ int main(void)
 		printf("F. TOTAL\n");
 		printf("G. SALIR\n");
 		opc = GetChar("> : ");
-
-		switch(opc)
+		opc = toupper(opc);
+		switch (opc)
 		{
 		case 'A':
-			AltaTrabajo(trabajosArray, serviciosArray, S, FECHA, X);
+			AltaTrabajo(trabajosArray, serviciosArray, S, X);
 			break;
 		case 'B':
-			ModificarProducto(trabajosArray, serviciosArray, S, X);
+			ModificarTrabajo(trabajosArray, serviciosArray, S, X);
 			break;
 		case 'C':
 			BajaTrabajo(trabajosArray, serviciosArray, S, X);
 			break;
 		case 'D':
-			MostrarProductos(trabajosArray, serviciosArray, X, S);
+			MostrarTrabajos(trabajosArray, serviciosArray, X, S);
 			break;
 		case 'E':
 			MostrarServicios(serviciosArray, S);
@@ -90,12 +91,11 @@ int main(void)
 
 			break;
 		case 'G':
-
 			break;
 		default:
 			printf("Esa no es una opcion\n");
 			break;
 		}
-	} while(opc != 'G');
+	} while (opc != 'G');
 	return EXIT_SUCCESS;
 }

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "Servicios.h"
 #include "Inputs.h"
+#include "sTrabajo.h"
 
 #define VACIO 0
 #define OCUPADO 1
@@ -9,35 +10,21 @@
 #ifndef TRABAJO_H_
 #define TRABAJO_H_
 
-typedef struct
-{
-	int dia;
-	int mes;
-	int anio;
-} sFecha;
-
-typedef struct
-{
-	int id;
-	char nombreMascota[50];
-	int idServicio;
-	sFecha fecha;
-	int isEmpty;
-} sTrabajo;
-
-
 /**
- * InicializarProducto, inicializa el isEmpty en 0 para saber si estan o no estan ocupados
+ * InicializarTrabajo, inicializa el isEmpty en 0 para saber si estan o no estan ocupados
  * @param sTrabajo obtiene los datos de la estructura sTrabajo
  * @param int el tamaño del array
  * */
-void InicializarProducto(sTrabajo[], int);
+void InicializarTrabajo(sTrabajo[], int);
 /**
  * BuscarLibre, busca un espacio libre para poder ingresar datos o no dependiendo si existe el espacio o no
  * @param sTrabajo obtiene los datos de la estructura sTrabajo
  * @param int el tamaño del array
  * */
 int BuscarLibre(sTrabajo[], int);
+sFecha ValidarFecha(sFecha);
+sFecha VerificarValidez(int, sFecha);
+int ValidarDia(int, int);
 /**
  *
  * */
@@ -75,9 +62,16 @@ int ObtenerDescripcionDeServicio(sTrabajo[], sServicios[], int, int);
  * @param sTrabajo[], array de la estructura trabajos
  * @param int, el tamaño de la estructura trabajos
  * */
-int BuscarProducto(sTrabajo[], int);
-void MostrarUnProducto(sTrabajo[], sServicios[], int, int, int);
-int MostrarProductos(sTrabajo [],sServicios [], int , int );
+int BuscarTrabajo(sTrabajo[], int);
+void MostrarUnTrabajo(sTrabajo[], sServicios[], int, int, int);
+int DetectarTrabajo(sTrabajo [], int);
+void ObtenerTrabajos(sTrabajo [],sServicios [], int, int);
+int MostrarTrabajos(sTrabajo [],sServicios [], int , int );
+
+sTrabajo OpcionBajaTrabajo(sTrabajo);
 int BajaTrabajo(sTrabajo [], sServicios [], int , int );
+
+sTrabajo OpcionModificarTrabajo(sTrabajo, sServicios[], int);
+int ModificarTrabajo(sTrabajo[], sServicios[], int, int);
 
 #endif /* TRABAJO_H_ */
