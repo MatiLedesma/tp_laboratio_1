@@ -22,10 +22,27 @@ void InicializarTrabajo(sTrabajo[], int);
  * @param int el tamaño del array
  * */
 int BuscarLibre(sTrabajo[], int);
+/**
+ * ValidarFecha, valida que la fecha ingresada exista
+ * @param sFecha obtiene los datos de la estructura fecha
+ * */
 sFecha ValidarFecha(sFecha);
+/**
+ * ValidarDiaMes, verifica que el dia y/o el mes esten bien ingresados
+ * @param int mes ingresado
+ * @param int dia ingresado
+ * */
 int ValidarDiaMes(int, int);
+/**
+ * VerificarValidez, se encarga de pedirle al usuario que ingrese el mes y/o la fecha correcta
+ * @param int el status de la validez, -1 y 0 son error 1 para valido
+ * @param sFecha obtiene la estructura de fecha y la devuelve
+ * */
 sFecha VerificarValidez(int, sFecha);
-
+/**
+ * AsignarId, asigna la id correcta obteniendo la id temporal en la carga de los trabajos
+ * @param int la id temporal para convertirla a la id del trabajo
+ * */
 int AsignarId(int);
 /**
  *

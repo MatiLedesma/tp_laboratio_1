@@ -91,7 +91,7 @@ int AsignarId(int id)
 	int idFinal;
 
 	idFinal = id + 1000;
-	if (id == -1) // si no existe ningun dato en el vector
+	if (id == -1) // si no existe ningun dato en el vector entonces la id va a ser la primera
 	{
 		idFinal = 1000;
 	}
