@@ -25,24 +25,7 @@ int BuscarLibre(sTrabajo trabajosArray[], int tam)
 	return index;
 }
 
-int AsignarId(sTrabajo trabajoArray[], int trabajoTam)
-{
-	int i;
-	int id;
-	id = 0;
-	for (i = 0; i < trabajoTam; i++)
-	{
-		if (trabajoArray[i].isEmpty == VACIO)
-		{
-			id = i;
-			break;
-		}
-	}
-	printf("id: %d\n", i);
-	return id;
-}
-
-int ValidarDia(int mes, int dia)
+int ValidarDiaMes(int mes, int dia)
 {
 	int status;
 	status = 0;
@@ -60,20 +43,30 @@ int ValidarDia(int mes, int dia)
 			status = 1;
 		}
 		break;
+	case 2:
+		if (dia >= 1 && dia <= 28)
+		{
+			status = 1;
+		}
+		break;
+	default:
+		status = -1; // -1 si el mes no es valido
+		break;
 	}
 	return status;
 }
 
 sFecha VerificarValidez(int status, sFecha fecha)
 {
-	while(status != 1)
+	while(status == -1)
+	{
+		fecha.mes = GetInt("Ingrese un mes valido: ");
+		status = ValidarDiaMes(fecha.mes, fecha.dia);
+	}
+	while(status == 0)
 	{
 		fecha.dia = GetInt("Ingrese un dia valido: ");
-		status = ValidarDia(fecha.mes, fecha.dia);
-	}
-	if (status == 1)
-	{
-		printf("Fecha agendada!\n");
+		status = ValidarDiaMes(fecha.mes, fecha.dia);
 	}
 
 	return fecha;
@@ -85,17 +78,33 @@ sFecha ValidarFecha(sFecha fecha)
 	fecha.dia = GetInt("Dia: ");
 	fecha.mes = GetInt("Mes: ");
 	fecha.anio = GetInt("Año: ");
-	status = ValidarDia(fecha.mes, fecha.dia);
+
+	status = ValidarDiaMes(fecha.mes, fecha.dia);
 	fecha = VerificarValidez(status, fecha);
+
 
 	return fecha;
 }
 
+int AsignarId(int id)
+{
+	int idFinal;
+
+	idFinal = id + 1000;
+	if (id == -1) // si no existe ningun dato en el vector
+	{
+		idFinal = 1000;
+	}
+	return idFinal;
+}
+
 sTrabajo CargarTrabajo(sServicios serviciosArray[], sTrabajo trabajoArray[], int serviciosTam, int trabajoTam)
 {
+	int tempId;
 	sTrabajo trabajo;
 
-	trabajo.id = AsignarId(trabajoArray, trabajoTam);
+	tempId = BuscarLibre(trabajoArray, trabajoTam);
+	trabajo.id = AsignarId(tempId);
 	GetString("Ingrese el nombre de la mascota: ", trabajo.nombreMascota);
 	printf("Ingrese el servicio para la mascota: \n");
 	MostrarServicios(serviciosArray, serviciosTam);
@@ -239,12 +248,10 @@ sTrabajo OpcionBajaTrabajo(sTrabajo trabajo)
 	return trabajo;
 }
 
-int BajaTrabajo(sTrabajo trabajosArray[], sServicios serviciosArray[], int serviciosTam, int trabajosTam)
+int DarDeBaja(sTrabajo trabajosArray[], int trabajosTam)
 {
 	int id;
-	MostrarTrabajos(trabajosArray, serviciosArray, trabajosTam, serviciosTam);
 	id = BuscarTrabajo(trabajosArray, trabajosTam);
-
 	if (id != -1)
 	{
 		trabajosArray[id] = OpcionBajaTrabajo(trabajosArray[id]);
@@ -255,7 +262,18 @@ int BajaTrabajo(sTrabajo trabajosArray[], sServicios serviciosArray[], int servi
 	}
 
 	return id;
+}
 
+int BajaTrabajo(sTrabajo trabajosArray[], sServicios serviciosArray[], int serviciosTam, int trabajosTam)
+{
+	int status;
+	int id;
+	status = MostrarTrabajos(trabajosArray, serviciosArray, trabajosTam, serviciosTam);
+	if (status != 0)
+	{
+		id = DarDeBaja(trabajosArray, trabajosTam);
+	}
+	return id;
 }
 
 sTrabajo OpcionModificarTrabajo(sTrabajo trabajo, sServicios serviciosArray[], int serviciosTam)
@@ -276,12 +294,10 @@ sTrabajo OpcionModificarTrabajo(sTrabajo trabajo, sServicios serviciosArray[], i
 	return trabajo;
 }
 
-int ModificarTrabajo(sTrabajo trabajosArray[], sServicios serviciosArray[], int serviciosTam, int trabajosTam)
+int HacerModificacion(sTrabajo trabajosArray[], int trabajosTam, sServicios serviciosArray[], int serviciosTam)
 {
 	int id;
-	MostrarTrabajos(trabajosArray, serviciosArray, trabajosTam, serviciosTam);
 	id = BuscarTrabajo(trabajosArray, trabajosTam);
-
 	if (id != -1)
 	{
 		trabajosArray[id] = OpcionModificarTrabajo(trabajosArray[id], serviciosArray, serviciosTam);
@@ -290,7 +306,18 @@ int ModificarTrabajo(sTrabajo trabajosArray[], sServicios serviciosArray[], int 
 	{
 		printf("No se encontro la id\n");
 	}
-
 	return id;
 }
 
+int ModificarTrabajo(sTrabajo trabajosArray[], sServicios serviciosArray[], int serviciosTam, int trabajosTam)
+{
+	int status;
+	int id;
+	status = MostrarTrabajos(trabajosArray, serviciosArray, trabajosTam, serviciosTam);
+	if (status != 0)
+	{
+		id = HacerModificacion(trabajosArray, trabajosTam, serviciosArray, serviciosTam);
+	}
+
+	return id;
+}

@@ -23,18 +23,14 @@ void InicializarTrabajo(sTrabajo[], int);
  * */
 int BuscarLibre(sTrabajo[], int);
 sFecha ValidarFecha(sFecha);
+int ValidarDiaMes(int, int);
 sFecha VerificarValidez(int, sFecha);
-int ValidarDia(int, int);
+
+int AsignarId(int);
 /**
  *
  * */
 sTrabajo CargarTrabajo(sServicios [], sTrabajo [], int, int);
-/**
- * AsignarId, recorre el array hasta encontrar un EMPTY, cuando lo encuentra devuelve el index
- * @param sTrabajo, obtiene los datos de la estructura trabajos
- * @param int el tamaño del array
- * */
-int AsignarId(sTrabajo [], int);
 /**
  * AltaTrabajo, da el alta a un trabajo
  * @param sTrabajo[], un array de la estructura de trabajo
@@ -69,9 +65,11 @@ void ObtenerTrabajos(sTrabajo [],sServicios [], int, int);
 int MostrarTrabajos(sTrabajo [],sServicios [], int , int );
 
 sTrabajo OpcionBajaTrabajo(sTrabajo);
+int DarDeBaja(sTrabajo[], int);
 int BajaTrabajo(sTrabajo [], sServicios [], int , int );
 
 sTrabajo OpcionModificarTrabajo(sTrabajo, sServicios[], int);
+int HacerModificacion(sTrabajo[], int, sServicios[], int);
 int ModificarTrabajo(sTrabajo[], sServicios[], int, int);
 
 #endif /* TRABAJO_H_ */

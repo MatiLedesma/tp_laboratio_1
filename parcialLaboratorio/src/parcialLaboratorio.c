@@ -1,5 +1,4 @@
-/*
- ============================================================================
+/*============================================================================
  Name        : parcialLaboratorio.c
  Author      : Ledesma Matias 1�c
  Version     :
@@ -37,8 +36,7 @@
 		contadores).
 		IV. El c�digo deber� tener comentarios con la documentaci�n de cada una de
 		las funciones y respetar las reglas de estilo de la c�tedra.
-============================================================================
- */
+============================================================================*/
 
 #include <stdio.h>
 #include <stdlib.h>
