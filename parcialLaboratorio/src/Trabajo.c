@@ -156,10 +156,53 @@ int ObtenerDescripcionDeServicio(sTrabajo trabajosArray[], sServicios serviciosA
 	return id;
 }
 
+int OrdenPorAnio(sTrabajo trabajosArray[], int i, int j)
+{
+	sTrabajo auxTrabajos;
+	if (trabajosArray[i].fecha.anio > trabajosArray[j].fecha.anio)
+	{
+		auxTrabajos = trabajosArray[i];
+		trabajosArray[i] = trabajosArray[j];
+		trabajosArray[j] = auxTrabajos;
+	}
+	return 0;
+}
+
+int CasoIgualdad(sTrabajo trabajosArray[], int i, int j)
+{
+	sTrabajo auxTrabajos;
+	if (trabajosArray[i].fecha.anio == trabajosArray[j].fecha.anio)
+	{
+		if (strcmp(trabajosArray[i].nombreMascota, trabajosArray[j].nombreMascota) > 0)
+		{
+			auxTrabajos = trabajosArray[i];
+			trabajosArray[i] = trabajosArray[j];
+			trabajosArray[j] = auxTrabajos;
+		}
+	}
+
+	return 0;
+}
+
+void OrdenarTrabajos(sTrabajo trabajosArray[], sServicios serviciosArray[], int trabajosTam, int serviciosTam)
+{
+	int i;
+	int j;
+
+
+	for (i = 0; i < trabajosTam - 1; i++)
+	{
+		for (j = i + 1; j < trabajosTam; j++)
+		{
+			OrdenPorAnio(trabajosArray, i, j);
+			CasoIgualdad(trabajosArray, i, j);
+		}
+	}
+}
+
 void MostrarUnTrabajo(sTrabajo trabajosArray[], sServicios serviciosArray[], int index, int trabajosTam, int serviciosTam)
 {
 	int id;
-
 	id = ObtenerDescripcionDeServicio(trabajosArray, serviciosArray, index, serviciosTam);
 	ImprimirMensaje(trabajosArray[index], serviciosArray[id]);
 }
@@ -200,6 +243,7 @@ int MostrarTrabajos(sTrabajo trabajosArray[],sServicios serviciosArray[], int tr
 
 	if (status != 0)
 	{
+		OrdenarTrabajos(trabajosArray, serviciosArray, trabajoTam, servicioTam);
 		ObtenerTrabajos(trabajosArray, serviciosArray, trabajoTam, servicioTam);
 	}
 	else

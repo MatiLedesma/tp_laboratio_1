@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "Servicios.h"
 #include "Inputs.h"
 #include "sTrabajo.h"
@@ -76,6 +77,9 @@ int ObtenerDescripcionDeServicio(sTrabajo[], sServicios[], int, int);
  * @param int, el tamaño de la estructura trabajos
  * */
 int BuscarTrabajo(sTrabajo[], int);
+void OrdenarTrabajos(sTrabajo[], sServicios[], int, int);
+int OrdenPorAnio(sTrabajo[], int, int);
+int CasoIgualdad(sTrabajo[], int, int);
 void MostrarUnTrabajo(sTrabajo[], sServicios[], int, int, int);
 int DetectarTrabajo(sTrabajo [], int);
 void ObtenerTrabajos(sTrabajo [],sServicios [], int, int);
