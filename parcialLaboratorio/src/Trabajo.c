@@ -1,9 +1,11 @@
 #include "Trabajo.h"
 
+static int id = 1000;
+
 void InicializarTrabajo(sTrabajo trabajosArray[], int tam)
 {
 	int i;
-	for (i = 0; i < tam; i++)
+	for (i = 0; i <= tam; i++)
 	{
 		trabajosArray[i].isEmpty = VACIO;
 	}
@@ -72,44 +74,41 @@ sFecha VerificarValidez(int status, sFecha fecha)
 	return fecha;
 }
 
+int ValidarAnio(int anio)
+{
+	while(anio < 2021)
+	{
+		anio = GetInt("Ingrese un año valido: ");
+	}
+	return anio;
+}
+
 sFecha ValidarFecha(sFecha fecha)
 {
 	int status;
 	fecha.dia = GetInt("Dia: ");
 	fecha.mes = GetInt("Mes: ");
 	fecha.anio = GetInt("Año: ");
-
+	fecha.anio = ValidarAnio(fecha.anio);
 	status = ValidarDiaMes(fecha.mes, fecha.dia);
 	fecha = VerificarValidez(status, fecha);
-
 
 	return fecha;
 }
 
-int AsignarId(int id)
-{
-	int idFinal;
-
-	idFinal = id + 1000;
-	if (id == -1) // si no existe ningun dato en el vector entonces la id va a ser la primera
-	{
-		idFinal = 1000;
-	}
-	return idFinal;
-}
-
 sTrabajo CargarTrabajo(sServicios serviciosArray[], sTrabajo trabajoArray[], int serviciosTam, int trabajoTam)
 {
-	int tempId;
 	sTrabajo trabajo;
 
-	tempId = BuscarLibre(trabajoArray, trabajoTam);
-	trabajo.id = AsignarId(tempId);
+	trabajo.id = id;
+	id++;
+	printf("id: %d\n", trabajo.id);
 	GetString("Ingrese el nombre de la mascota: ", trabajo.nombreMascota);
 	printf("Ingrese el servicio para la mascota: \n");
 	MostrarServicios(serviciosArray, serviciosTam);
-	trabajo.idServicio = GetInt("> : ");
+	trabajo.idServicio = ValidarIdCorrecta(serviciosArray, serviciosTam);
 	trabajo.fecha = ValidarFecha(trabajo.fecha);
+	trabajo.isEmpty = OCUPADO;
 
 	return trabajo;
 }
@@ -132,7 +131,7 @@ int AltaTrabajo(sTrabajo trabajosArray[], sServicios serviciosArray[], int servi
 	return 0;
 }
 
-/////////////// BAJA
+/////////////// MOSTRAR
 
 void ImprimirMensaje(sTrabajo trabajos, sServicios servicios)
 {
@@ -154,50 +153,6 @@ int ObtenerDescripcionDeServicio(sTrabajo trabajosArray[], sServicios serviciosA
 	}
 
 	return id;
-}
-
-int OrdenPorAnio(sTrabajo trabajosArray[], int i, int j)
-{
-	sTrabajo auxTrabajos;
-	if (trabajosArray[i].fecha.anio > trabajosArray[j].fecha.anio)
-	{
-		auxTrabajos = trabajosArray[i];
-		trabajosArray[i] = trabajosArray[j];
-		trabajosArray[j] = auxTrabajos;
-	}
-	return 0;
-}
-
-int CasoIgualdad(sTrabajo trabajosArray[], int i, int j)
-{
-	sTrabajo auxTrabajos;
-	if (trabajosArray[i].fecha.anio == trabajosArray[j].fecha.anio)
-	{
-		if (strcmp(trabajosArray[i].nombreMascota, trabajosArray[j].nombreMascota) > 0)
-		{
-			auxTrabajos = trabajosArray[i];
-			trabajosArray[i] = trabajosArray[j];
-			trabajosArray[j] = auxTrabajos;
-		}
-	}
-
-	return 0;
-}
-
-void OrdenarTrabajos(sTrabajo trabajosArray[], sServicios serviciosArray[], int trabajosTam, int serviciosTam)
-{
-	int i;
-	int j;
-
-
-	for (i = 0; i < trabajosTam - 1; i++)
-	{
-		for (j = i + 1; j < trabajosTam; j++)
-		{
-			OrdenPorAnio(trabajosArray, i, j);
-			CasoIgualdad(trabajosArray, i, j);
-		}
-	}
 }
 
 void MostrarUnTrabajo(sTrabajo trabajosArray[], sServicios serviciosArray[], int index, int trabajosTam, int serviciosTam)
@@ -240,10 +195,8 @@ int MostrarTrabajos(sTrabajo trabajosArray[],sServicios serviciosArray[], int tr
 {
 	int status;
 	status = DetectarTrabajo(trabajosArray, trabajoTam);
-
 	if (status != 0)
 	{
-		OrdenarTrabajos(trabajosArray, serviciosArray, trabajoTam, servicioTam);
 		ObtenerTrabajos(trabajosArray, serviciosArray, trabajoTam, servicioTam);
 	}
 	else
@@ -254,6 +207,7 @@ int MostrarTrabajos(sTrabajo trabajosArray[],sServicios serviciosArray[], int tr
 	return status;
 }
 
+///////////// BUSCAR
 
 int BuscarTrabajo(sTrabajo trabajosArray[], int tam)
 {
@@ -275,6 +229,9 @@ int BuscarTrabajo(sTrabajo trabajosArray[], int tam)
 
 	return find;
 }
+
+
+//////////////// BAJA TRABAJOS
 
 sTrabajo OpcionBajaTrabajo(sTrabajo trabajo)
 {
@@ -320,6 +277,9 @@ int BajaTrabajo(sTrabajo trabajosArray[], sServicios serviciosArray[], int servi
 	return id;
 }
 
+
+////////// MODIFICAR
+
 sTrabajo OpcionModificarTrabajo(sTrabajo trabajo, sServicios serviciosArray[], int serviciosTam)
 {
 	int opc;
@@ -364,4 +324,49 @@ int ModificarTrabajo(sTrabajo trabajosArray[], sServicios serviciosArray[], int 
 	}
 
 	return id;
+}
+
+///////////// Ordenar
+
+int OrdenPorAnio(sTrabajo trabajosArray[], int i, int j)
+{
+	sTrabajo auxTrabajos;
+	if (trabajosArray[i].fecha.anio > trabajosArray[j].fecha.anio)
+	{
+		auxTrabajos = trabajosArray[i];
+		trabajosArray[i] = trabajosArray[j];
+		trabajosArray[j] = auxTrabajos;
+	}
+	return 0;
+}
+
+int CasoIgualdad(sTrabajo trabajosArray[], int i, int j)
+{
+	sTrabajo auxTrabajos;
+	if (trabajosArray[i].fecha.anio == trabajosArray[j].fecha.anio)
+	{
+		if (strcmp(trabajosArray[i].nombreMascota, trabajosArray[j].nombreMascota) > 0)
+		{
+			auxTrabajos = trabajosArray[i];
+			trabajosArray[i] = trabajosArray[j];
+			trabajosArray[j] = auxTrabajos;
+		}
+	}
+	return 0;
+}
+
+int OrdenarTrabajos(sTrabajo trabajosArray[], int trabajosTam)
+{
+	int i;
+	int j;
+	for (i = 0; i < trabajosTam - 1; i++)
+	{
+		for (j = i + 1; j < trabajosTam; j++)
+		{
+			OrdenPorAnio(trabajosArray, i, j);
+			CasoIgualdad(trabajosArray, i, j);
+		}
+	}
+
+	return 0;
 }

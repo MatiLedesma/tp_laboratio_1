@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 #include "sServicios.h"
+#include "sTrabajo.h"
+#include "Inputs.h"
 
 #define VACIO 0
 #define OCUPADO 1
@@ -28,5 +30,12 @@ int MostrarServicio(sServicios);
  * @param int es el tamaño del array
  * */
 int MostrarServicios(sServicios [], int);
+
+int CorroborarFkConPk(sTrabajo, sServicios, int);
+int ObtenerPrecios(sTrabajo[], sServicios[], int, int);
+int MostrarPrecioTotal(sTrabajo[], sServicios[], int, int);
+
+int IdMinima(int, int);
+int ValidarIdCorrecta(sServicios[], int);
 
 #endif /* SERVICIOS_H_ */

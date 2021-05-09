@@ -69,3 +69,73 @@ int MostrarServicios(sServicios serviciosArray[], int tam)
 
 	return status;
 }
+
+/////////// PRECIOS
+
+int CorroborarFkConPk(sTrabajo trabajos, sServicios servicios, int precio)
+{
+	if (trabajos.idServicio == servicios.id)
+	{
+		precio += servicios.precio;
+	}
+
+	return precio;
+}
+
+int ObtenerPrecios(sTrabajo trabajosArray[], sServicios serviciosArray[], int serviciosTam, int trabajosTam)
+{
+	int precio;
+	int i;
+	int j;
+	precio = 0;
+	for (i = 0; i < trabajosTam; i++)
+	{
+		for (j = 0; j < serviciosTam; j++)
+		{
+			precio = CorroborarFkConPk(trabajosArray[i], serviciosArray[j], precio);
+		}
+	}
+	return precio;
+}
+
+int MostrarPrecioTotal(sTrabajo trabajosArray[], sServicios serviciosArray[], int serviciosTam, int trabajosTam)
+{
+	int precioTotal;
+	precioTotal = ObtenerPrecios(trabajosArray, serviciosArray, serviciosTam, trabajosTam);
+	return precioTotal;
+}
+
+
+//////// VALIDAR ID correcta
+
+int IdMinima(int id, int i)
+{
+	int idMin;
+
+	if (i == 0)
+	{
+		idMin = id;
+	}
+	return idMin;
+}
+
+int ValidarIdCorrecta(sServicios serviciosArray[], int serviciosTam)
+{
+	int idServicio;
+	int idMax;
+	int idMin;
+	int i;
+
+	idServicio = GetInt("> : ");
+	for (i = 0; i < serviciosTam; i++)
+	{
+		idMin = IdMinima(serviciosArray[i].id, i);
+		idMax = serviciosArray[i].id;
+	}
+	while(idServicio < idMin || idServicio > idMax)
+	{
+		idServicio = GetInt("Ingrese una id correcta: ");
+	}
+
+	return idServicio;
+}

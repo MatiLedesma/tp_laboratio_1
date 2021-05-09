@@ -47,12 +47,13 @@
 #include "Inputs.h"
 
 #define S 3
-#define X 10
+#define X 12
 
 int main(void)
 {
+	int total;
 	sServicios serviciosArray[S];
-	sTrabajo trabajosArray[12];
+	sTrabajo trabajosArray[X];
 
 	HardcodearServicios(serviciosArray, S);
 	InicializarTrabajo(trabajosArray, X);
@@ -80,13 +81,15 @@ int main(void)
 			BajaTrabajo(trabajosArray, serviciosArray, S, X);
 			break;
 		case 'D':
+			OrdenarTrabajos(trabajosArray, X);
 			MostrarTrabajos(trabajosArray, serviciosArray, X, S);
 			break;
 		case 'E':
 			MostrarServicios(serviciosArray, S);
 			break;
 		case 'F':
-
+			total = MostrarPrecioTotal(trabajosArray, serviciosArray, S, X);
+			printf("Total: $%d\n", total);
 			break;
 		case 'G':
 			break;

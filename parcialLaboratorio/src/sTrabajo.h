@@ -1,12 +1,7 @@
+#include "sFecha.h"
+
 #ifndef STRABAJO_H_
 #define STRABAJO_H_
-
-typedef struct
-{
-	int dia;
-	int mes;
-	int anio;
-} sFecha;
 
 typedef struct
 {
