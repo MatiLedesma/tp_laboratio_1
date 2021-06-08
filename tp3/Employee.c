@@ -16,7 +16,7 @@ Employee* employee_newParametros(char* idStr,char* nombreStr,char* horasTrabajad
 	employee_setId(empleado, atoi(idStr));
 	employee_setNombre(empleado, nombreStr);
 	employee_setHorasTrabajadas(empleado, atoi(horasTrabajadasStr));
-	employee_setSueldo(empleado, atoi(idStr));
+	employee_setSueldo(empleado, atoi(sueldoStr));
 
 	return empleado;
 }
@@ -112,4 +112,12 @@ int employee_getSueldo(Employee* this,int* sueldo)
 		status = 1;
 	}
 	return status;
+}
+
+
+int swap_alpha(Employee *employeeI, Employee *employeeJ)
+{
+	int value;
+	value = strcmp(employeeI->nombre, employeeJ->nombre);
+	return value;
 }

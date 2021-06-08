@@ -58,6 +58,21 @@ int main()
         case 4:
         	controller_editEmployee(listaEmpleados);
         	break;
+        case 5:
+        	controller_removeEmployee(listaEmpleados);
+        	break;
+        case 6:
+        	controller_ListEmployee(listaEmpleados);
+        	break;
+        case 7:
+        	controller_sortEmployee(listaEmpleados);
+        	break;
+        case 8:
+        	controller_saveAsText("../dataSave.csv", listaEmpleados);
+        	break;
+        case 9:
+        	controller_saveAsBinary("../dataSave.bin", listaEmpleados);
+        	break;
         case 10:
         	break;
         default:
