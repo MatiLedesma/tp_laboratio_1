@@ -55,6 +55,9 @@ int main()
         	controller_addEmployee(listaEmpleados);
         	printf("Length: %d\n", ll_len(listaEmpleados));
         	break;
+        case 4:
+        	controller_editEmployee(listaEmpleados);
+        	break;
         case 10:
         	break;
         default:

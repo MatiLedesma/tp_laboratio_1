@@ -70,7 +70,7 @@ int controller_addEmployee(LinkedList *pArrayListEmployee)
 
 	getString("Ingrese su nombre: ", nombre);
 	getString_number("Ingrese sus horas trabajadas: ", "Error, reingrese: ", horasTrabajadas);
-	getString_numer("Ingrese su salario: ", "Error, reingrese: ", salario);
+	getString_number("Ingrese su salario: ", "Error, reingrese: ", salario);
 
 	employee = employee_newParametros(id, nombre, horasTrabajadas, salario);
 
@@ -97,6 +97,14 @@ int controller_addEmployee(LinkedList *pArrayListEmployee)
  */
 int controller_editEmployee(LinkedList *pArrayListEmployee)
 {
+	int id;
+
+	printf("Ingrese la id que desea buscar: ");
+	scanf("%d", id);
+
+	ll_get(pArrayListEmployee, id);
+
+
     return 1;
 }
 
