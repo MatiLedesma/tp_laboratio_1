@@ -48,7 +48,7 @@ int main()
             printf("Length %d\n", ll_len(listaEmpleados));
             break;
         case 2:
-        	controller_loadFromBinary("../data.csv", listaEmpleados);
+        	controller_loadFromBinary("../data.bin", listaEmpleados);
         	printf("Length %d\n", ll_len(listaEmpleados));
         	break;
         case 3:
@@ -71,7 +71,7 @@ int main()
         	controller_saveAsText("../dataSave.csv", listaEmpleados);
         	break;
         case 9:
-        	controller_saveAsBinary("../dataSave.bin", listaEmpleados);
+        	controller_saveAsBinary("../data.bin", listaEmpleados);
         	break;
         case 10:
         	break;

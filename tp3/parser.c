@@ -8,6 +8,8 @@
  */
 int parser_EmployeeFromText(FILE *pFile, LinkedList *pArrayListEmployee)
 {
+	int status;
+	status = 0;
 	FILE *pFileId;
     //id,nombre,horasTrabajadas,sueldo
     char id[50];
@@ -16,8 +18,9 @@ int parser_EmployeeFromText(FILE *pFile, LinkedList *pArrayListEmployee)
     char sueldo[50];
     Employee *employee;
 
-    if (pFile != NULL)
+    if (pFile != NULL && pArrayListEmployee != NULL)
     {
+    	ll_clear(pArrayListEmployee);
         fscanf(pFile, "%[^,],%[^,],%[^,],%[^\n]\n", id, nombre, horasTrabajadas, sueldo);
         while (!feof(pFile))
         {
@@ -25,6 +28,7 @@ int parser_EmployeeFromText(FILE *pFile, LinkedList *pArrayListEmployee)
             employee = employee_newParametros(id, nombre, horasTrabajadas, sueldo);
             ll_add(pArrayListEmployee, employee);
         }
+        status = 1;
     }
     else printf("Error...\n");
 
@@ -32,7 +36,7 @@ int parser_EmployeeFromText(FILE *pFile, LinkedList *pArrayListEmployee)
     fprintf(pFileId, "%s", id);
     fclose(pFileId);
 
-    return 1;
+    return status;
 }
 
 /** \brief Parsea los datos los datos de los empleados desde el archivo data.csv (modo binario).
@@ -44,6 +48,38 @@ int parser_EmployeeFromText(FILE *pFile, LinkedList *pArrayListEmployee)
  */
 int parser_EmployeeFromBinary(FILE *pFile, LinkedList *pArrayListEmployee)
 {
+	int status;
+	status = 0;
+	FILE *pFileId;
+	int id;
+	int horasTrabajadas;
+	int sueldo;
+	Employee *employee;
 
-    return 1;
+	if (pFile != NULL && pArrayListEmployee != NULL)
+	{
+		ll_clear(pArrayListEmployee);
+		while (!feof(pFile))
+		{
+			employee = employee_new();
+			fread(employee, sizeof(Employee), 1, pFile);
+
+			employee_getId(employee, &id);
+			employee_getHorasTrabajadas(employee, &horasTrabajadas);
+			employee_getSueldo(employee, &sueldo);
+
+			if (id != 0 && horasTrabajadas != 0 && sueldo != 0)
+			{
+				if ((pFileId = fopen("../lastId.txt", "w")) != NULL)
+				{
+					fprintf(pFileId, "%d", id);
+					fclose(pFileId);
+				}
+				ll_add(pArrayListEmployee, employee);
+			}
+		}
+		status = 1;
+	}
+	else printf("Error...\n");
+	return status;
 }

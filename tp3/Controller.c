@@ -33,17 +33,19 @@ int controller_loadFromText(char *path, LinkedList *pArrayListEmployee)
 int controller_loadFromBinary(char *path, LinkedList *pArrayListEmployee)
 {
 	int status;
-	FILE *archivo;
-
 	status = 0;
-	if ((archivo = fopen(path, "r")) != NULL)
-	{
-		parser_EmployeeFromBinary(archivo, pArrayListEmployee);
-		fclose(archivo);
-		status = 1;
-	} else printf("Archivo vacio...\n");
 
-    return status;
+	FILE* pFile;
+	if(path != NULL && pArrayListEmployee != NULL)
+	{
+		if((pFile = fopen(path,"rb")) != NULL)
+		{
+			parser_EmployeeFromBinary(pFile, pArrayListEmployee);
+			status = 1;
+			fclose(pFile);
+		} else printf("Archivo vacio...\n");
+	}
+	return status;
 }
 
 /** \brief Alta de empleados
@@ -281,7 +283,6 @@ int controller_saveAsBinary(char *path, LinkedList *pArrayListEmployee)
 
 		if ((pFile = fopen(path, "wb")) != NULL)
 		{
-			fprintf(pFile, "id,nombre,horasTrabajadas,sueldo\n");
 			for (i = 0; i < length; i++)
 			{
 				employee = (Employee*)ll_get(pArrayListEmployee, i);
