@@ -55,20 +55,12 @@ int controller_loadFromBinary(char *path, LinkedList *pArrayListEmployee)
  * \return int
  *
  */
-int controller_addEmployee(LinkedList *pArrayListEmployee)
+int controller_addEmployee(LinkedList *pArrayListEmployee, char *id)
 {
-	FILE *fileId;
 	Employee *employee;
-	char id[50];
 	char nombre[50];
 	char horasTrabajadas[50];
 	char salario[50];
-
-	if ((fileId = fopen("../lastId.txt", "r")) != NULL)
-	{
-		fscanf(fileId, "%s", id);
-		fclose(fileId);
-	}
 
 	getString("Ingrese su nombre: ", nombre);
 	getString_number("Ingrese sus horas trabajadas: ", "Error, reingrese: ", horasTrabajadas);
@@ -79,11 +71,6 @@ int controller_addEmployee(LinkedList *pArrayListEmployee)
 
 	ll_add(pArrayListEmployee, employee);
 
-	if ((fileId = fopen("../lastId.txt", "w")) != NULL)
-	{
-		fprintf(fileId, "%s", id);
-		fclose(fileId);
-	}
 	printf("id: %s\n", id);
 
     return 1;
@@ -292,4 +279,34 @@ int controller_saveAsBinary(char *path, LinkedList *pArrayListEmployee)
 		}
 	}
     return 1;
+}
+
+int controller_loadLastId(char *path, char *value)
+{
+	int status;
+	status = 0;
+	FILE *pFile;
+	if ((pFile = fopen(path, "w")) != NULL)
+	{
+		fprintf(pFile, value);
+		fclose(pFile);
+		status = 1;
+	}
+
+	return status;
+}
+
+int controller_readLastId(char *path, char *lastId)
+{
+	int status;
+	status = 0;
+	FILE *pFile;
+	if ((pFile = fopen(path, "r")) != NULL)
+	{
+		fscanf(pFile, "%s", lastId);
+		fclose(pFile);
+		status = 1;
+	}
+
+	return status;
 }

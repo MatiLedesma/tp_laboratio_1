@@ -1,4 +1,5 @@
 #include "parser.h"
+#include "Controller.h"
 /** \brief Parsea los datos los datos de los empleados desde el archivo data.csv (modo texto).
  *
  * \param path char*
@@ -10,7 +11,6 @@ int parser_EmployeeFromText(FILE *pFile, LinkedList *pArrayListEmployee)
 {
 	int status;
 	status = 0;
-	FILE *pFileId;
     //id,nombre,horasTrabajadas,sueldo
     char id[50];
     char nombre[50];
@@ -32,9 +32,7 @@ int parser_EmployeeFromText(FILE *pFile, LinkedList *pArrayListEmployee)
     }
     else printf("Error...\n");
 
-    pFileId = fopen("../lastId.txt", "w");
-    fprintf(pFileId, "%s", id);
-    fclose(pFileId);
+    controller_loadLastId("../lastId.txt", id);
 
     return status;
 }
@@ -48,12 +46,11 @@ int parser_EmployeeFromText(FILE *pFile, LinkedList *pArrayListEmployee)
  */
 int parser_EmployeeFromBinary(FILE *pFile, LinkedList *pArrayListEmployee)
 {
+	int fReadStatus;
 	int status;
 	status = 0;
-	FILE *pFileId;
 	int id;
-	int horasTrabajadas;
-	int sueldo;
+	char idStr[50];
 	Employee *employee;
 
 	if (pFile != NULL && pArrayListEmployee != NULL)
@@ -62,19 +59,13 @@ int parser_EmployeeFromBinary(FILE *pFile, LinkedList *pArrayListEmployee)
 		while (!feof(pFile))
 		{
 			employee = employee_new();
-			fread(employee, sizeof(Employee), 1, pFile);
+			fReadStatus = fread(employee, sizeof(Employee), 1, pFile);
 
-			employee_getId(employee, &id);
-			employee_getHorasTrabajadas(employee, &horasTrabajadas);
-			employee_getSueldo(employee, &sueldo);
-
-			if (id != 0 && horasTrabajadas != 0 && sueldo != 0)
+			if (fReadStatus == 1)
 			{
-				if ((pFileId = fopen("../lastId.txt", "w")) != NULL)
-				{
-					fprintf(pFileId, "%d", id);
-					fclose(pFileId);
-				}
+				employee_getId(employee, &id);
+				sprintf(idStr, "%d", id);
+				controller_loadLastId("../lastId.txt", idStr);
 				ll_add(pArrayListEmployee, employee);
 			}
 		}

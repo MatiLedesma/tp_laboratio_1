@@ -26,8 +26,12 @@ int main()
 {
 	setbuf(stdout, NULL);
     int option = 0;
+    char id[20];
 
     LinkedList *listaEmpleados = ll_newLinkedList();
+    controller_loadLastId("../lastId.txt", "1000");
+    controller_readLastId("../lastId.txt", id);
+
     do
     {
         printf("1. Cargar los datos de los empleados desde el archivo data.csv (modo texto).\n");
@@ -52,7 +56,7 @@ int main()
         	printf("Length %d\n", ll_len(listaEmpleados));
         	break;
         case 3:
-        	controller_addEmployee(listaEmpleados);
+        	controller_addEmployee(listaEmpleados, id);
         	printf("Length: %d\n", ll_len(listaEmpleados));
         	break;
         case 4:
