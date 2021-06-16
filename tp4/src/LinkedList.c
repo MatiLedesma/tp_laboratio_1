@@ -159,7 +159,6 @@ int ll_add(LinkedList* this, void* pElement)
 {
 	int length = ll_len(this);
     int returnAux = -1;
-    //int status;
 
     if (this != NULL)
     {
@@ -279,7 +278,6 @@ int ll_remove(LinkedList* this,int index)
  */
 int ll_clear(LinkedList* this)
 {
-	void *pElement;
     int returnAux = -1;
     int i;
     if (this != NULL)
@@ -287,9 +285,7 @@ int ll_clear(LinkedList* this)
 		int length = ll_len(this);
     	for (i = 0; i < length; i++)
     	{
-    		pElement = ll_get(this, i);// obtengo los elementos por cada iteracion
-    		free(pElement); // libero espacio en memoria que es ocupado por los elementos
-    		this->size -= 1;
+    		ll_remove(this, i);
     	}
     	returnAux = 0;
     }
@@ -311,6 +307,7 @@ int ll_deleteLinkedList(LinkedList* this)
 
     if (this != NULL)
     {
+    	ll_clear(this);
     	free(this);
     	returnAux = 0;
     }
@@ -352,7 +349,6 @@ int ll_isEmpty(LinkedList* this)
     		returnAux = 0; // no esta vacia
     	}
     }
-
     return returnAux;
 }
 

@@ -70,9 +70,6 @@ int controller_addEmployee(LinkedList *pArrayListEmployee, char *id)
 	employee = employee_newParametros(id, nombre, horasTrabajadas, salario);
 
 	ll_add(pArrayListEmployee, employee);
-
-	printf("id: %s\n", id);
-
     return 1;
 }
 

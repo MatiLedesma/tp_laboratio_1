@@ -49,15 +49,12 @@ int main()
         {
         case 1:
             controller_loadFromText("../data.csv", listaEmpleados);
-            printf("Length %d\n", ll_len(listaEmpleados));
             break;
         case 2:
         	controller_loadFromBinary("../data.bin", listaEmpleados);
-        	printf("Length %d\n", ll_len(listaEmpleados));
         	break;
         case 3:
         	controller_addEmployee(listaEmpleados, id);
-        	printf("Length: %d\n", ll_len(listaEmpleados));
         	break;
         case 4:
         	controller_editEmployee(listaEmpleados);
