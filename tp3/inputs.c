@@ -6,6 +6,7 @@ int getString(char *message, char *value)
 	status = 0;
 	printf("%s", message);
 	scanf("%s", value);
+	value[0] = toupper(value[0]);
 
 	return status;
 }

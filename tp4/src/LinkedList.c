@@ -523,10 +523,11 @@ LinkedList* ll_clone(LinkedList* this)
 {
     LinkedList* cloneArray = NULL;
 
+    int length = ll_len(this);
+
     if (this != NULL)
     {
-    	// cloneArray va a ser igual al linkedList pasado como parametro
-    	cloneArray = this;
+    	cloneArray = ll_subList(this, 0, length);
     }
 
     return cloneArray;
