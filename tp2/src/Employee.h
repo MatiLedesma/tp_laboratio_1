@@ -30,15 +30,16 @@ int limitSector(int*, char*);
  * createEmployee, crea el alta del empleado
  * @param sEmployee, obtiene el array de la estructura de empleados
  * @param int el tamaño del array
- * @param char el mensaje que se le muestra al usuario
+ * @param int el ultimo id ingresado
  * */
-sEmployee createEmployee(sEmployee*, int);
+sEmployee createEmployee(sEmployee*, int, int *);
 /**
  * addEmployee, añade 1 empleado al array de empleados
  * @param sEmployee, obtiene el array de la estructura de empleados
  * @param int el tamaño del array
+ * @param int el ultimo id ingresado
  * */
-int addEmployee(sEmployee*, int);
+int addEmployee(sEmployee*, int, int*);
 /**
  * existProduct, verifica si hay empleados cargados
  * */

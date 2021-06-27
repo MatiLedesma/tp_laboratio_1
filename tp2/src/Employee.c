@@ -1,6 +1,5 @@
 #include "Employee.h"
 
-static int id;
 static int datosCargados = 0;
 
 int initEmployee(sEmployee* employeeArray, int tam)
@@ -42,27 +41,27 @@ int limitSector(int* sector, char* msj)
 	}
 	return 0;
 }
-sEmployee createEmployee(sEmployee* employeeArray, int tam)
+sEmployee createEmployee(sEmployee* employeeArray, int tam, int *id)
 {
 	sEmployee employee;
-	id = searchFree(employeeArray, tam);
-	employee.id = id;
+	employee.id = *id;
 	GetString(employee.name, "Ingrese su nombre: ");
 	GetString(employee.lastName, "Ingrese su apellido: ");
 	GetFloat(&employee.salary, "Ingrese su salario: ");
 	limitSector(&employee.sector, "Ingrese el sector (0, 10): ");
 	employee.isEmpty = OCUPED;
+	*id += 1;
 	return employee;
 }
 
-int addEmployee(sEmployee* employeeArray, int tam)
+int addEmployee(sEmployee* employeeArray, int tam, int *id)
 {
 	int index;
 
 	index = searchFree(employeeArray, tam);
 	if (index != -1)
 	{
-		employeeArray[index] = createEmployee(employeeArray, tam);
+		employeeArray[index] = createEmployee(employeeArray, tam, id);
 		datosCargados++;
 	}
 	else

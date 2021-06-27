@@ -4,8 +4,11 @@ int Menu()
 {
 	sEmployee employee[TAM];
 	int opc;
+	int opcSalir;
+	int id;
+	id = 0;
 	initEmployee(employee, TAM);
-
+inicio:
 	do
 	{
 		printf("1. ALTA\n");
@@ -20,7 +23,7 @@ int Menu()
 		switch(opc)
 		{
 		case 1:
-			addEmployee(employee, TAM);
+			addEmployee(employee, TAM, &id);
 			break;
 		case 2:
 			modifyEmployee(employee, TAM);
@@ -35,6 +38,18 @@ int Menu()
 			averageSalary(employee, TAM);
 			break;
 		case 5:
+			GetInt(&opcSalir, "Desea salir? 1(si)/2(no)");
+			if (opcSalir == 1)
+			{
+				break;
+			}
+			else
+			{
+				if (opcSalir == 2)
+				{
+					goto inicio;
+				}
+			}
 			break;
 		default:
 			printf("No es una opcion...\n");
